@@ -1,11 +1,5 @@
-import React, { useRef, useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import React, { useRef } from "react";
+import { View, TouchableOpacity, Text, StyleSheet, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet, { ActionSheetRef } from "react-native-actions-sheet";
 
@@ -33,23 +27,40 @@ const SelectList: React.FC<SelectListProps> = ({ selectedValue, onValueChange, m
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => actionSheetRef.current?.show()} style={[styles.selectBox, hasError && styles.errorBorder]}>
+      <TouchableOpacity 
+        onPress={() => actionSheetRef.current?.show()} 
+        style={[styles.selectBox, hasError && styles.errorBorder]}>
         <Text style={styles.text}>{selectedValue}</Text>
         <Ionicons name="chevron-down" size={20} color="gray" />
       </TouchableOpacity>
 
-      <ActionSheet ref={actionSheetRef} gestureEnabled={true}>
+      <ActionSheet 
+        ref={actionSheetRef} 
+        gestureEnabled={true}
+        containerStyle={styles.actionSheetContainer} >
         <FlatList
           data={categoryList}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.option}
-              onPress={() => handleValueChange(item)}
-            >
-              <Text style={styles.optionText}>{item}</Text>
-            </TouchableOpacity>
-          )}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => {
+            const isSelected = item === selectedValue;
+            return (
+              <TouchableOpacity
+                style={isSelected ? [styles.option, styles.selectedOption] : styles.option}
+                onPress={() => handleValueChange(item)}
+              >
+                <Text style={isSelected ? [styles.optionText, styles.selectedOptionText] : styles.optionText }>
+                  {item}
+                </Text>
+                {isSelected && (
+                  <Ionicons 
+                    name="checkmark" 
+                    size={20} 
+                    color="white"
+                  />
+                )}
+              </TouchableOpacity>
+            );
+          }}
         />
       </ActionSheet>
     </View>
@@ -82,11 +93,29 @@ const styles = StyleSheet.create({
     color: "#000",
   }, 
   option: {
-    paddingVertical: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+  },
+  actionSheetContainer: {
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   optionText: {
     fontSize: 16,
     color: "#000",
+    fontWeight: "bold",
+    paddingHorizontal: 10,
+  },
+  selectedOption: {
+    backgroundColor: "#469738",
+    borderRadius: 12,
+  },
+  selectedOptionText: {
+    color: "white",
   },
 });
