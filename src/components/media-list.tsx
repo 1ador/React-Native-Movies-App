@@ -38,18 +38,30 @@ const MediaList = ({ type, category, fetchedData }: MediaListProps) => {
 
   return (
     <View style={styles.container}>
-       {loading && !fetchedData ? (
+      {loading && !fetchedData ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#FF1493" />
           <Text style={styles.loadingText}>Loading...</Text>
         </View>
-      ) : dataToRender.length > 0 ? (
-        <View style={styles.listContainer}>
-          {dataToRender.map((item) => (
-            <MediaCard key={item.id} data={item} mode={type} />
-          ))}
+        ) : dataToRender.length > 0 ? (
+          <View style={styles.listContainer}>
+          {type === "search" ? (
+            category === "multi" ? (
+              dataToRender.map((item) => (
+                  <MediaCard key={item.id} data={item} mode={item.media_type} />
+                ))
+            ) : (
+              dataToRender.map((item) => (
+                <MediaCard key={item.id} data={item} mode={category} />
+              ))
+            )
+          ) : (
+            dataToRender.map((item) => (
+              <MediaCard key={item.id} data={item} mode={type} />
+            ))
+          )}
         </View>
-      ) : (
+        ) : (
         <Text style={styles.noResultsText}>No data available.</Text>
       )}
     </View>

@@ -10,6 +10,7 @@ const MediaDetails: React.FC = () => {
   const { str } = useLocalSearchParams();
   const navigation = useNavigation();
   const APIKEY = ENV.API_KEY;
+  const URL = ENV.BASE_URL;
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +18,7 @@ const MediaDetails: React.FC = () => {
     const fetchMediaDetails = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/${str}?api_key=${APIKEY}`
+          `${URL}/${str}?api_key=${APIKEY}`
         );
         setDetailData(response.data);
         navigation.setOptions({

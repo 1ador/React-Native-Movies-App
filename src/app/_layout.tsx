@@ -14,7 +14,7 @@ export default function Layout() {
               backgroundColor: "#273646",
             },
             headerTitleStyle: {
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: "bold",
               color: "white",
             }, 
@@ -24,7 +24,7 @@ export default function Layout() {
           name="media-details"
           options={{
             headerShown: true,
-            headerBackTitle: "Back to List", 
+            headerBackTitle: "Back", 
           }}
         />
       </Stack>

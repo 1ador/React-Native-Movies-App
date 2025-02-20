@@ -8,13 +8,14 @@ import { ENV } from "@/config";
 
 const MovieScreen: React.FC = () => {
   const APIKEY = ENV.API_KEY;
+  const URL = ENV.BASE_URL;
   const [category, setCategory] = useState<string>("popular");
   const [fetchUrl, setFetchUrl] = useState(
-    `https://api.themoviedb.org/3/movie/${category}?api_key=${APIKEY}`
+    `${URL}/movie/${category}?api_key=${APIKEY}`
   );
 
   useEffect(() => {
-    setFetchUrl(`https://api.themoviedb.org/3/movie/${category}?api_key=${APIKEY}`);
+    setFetchUrl(`${URL}/movie/${category}?api_key=${APIKEY}`);
   }, [category]);
 
   const { fetchedData, loading, page, totalPages, handleNextPage, handlePreviousPage, getCurrentPageData } =
@@ -46,7 +47,6 @@ const MovieScreen: React.FC = () => {
         </View>
       </ScrollView>
     </View>
-
   );
 }
 

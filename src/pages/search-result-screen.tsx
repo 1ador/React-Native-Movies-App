@@ -14,6 +14,7 @@ const SearchScreen: React.FC = () => {
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const APIKEY = ENV.API_KEY;
+  const URL = ENV.BASE_URL;
 
   const handleSearch = useCallback(async () => {
     Keyboard.dismiss();
@@ -26,9 +27,8 @@ const SearchScreen: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/search/${genre}?query=${encodeURIComponent(searchName)}&api_key=${APIKEY}`
+        `${URL}/search/${genre}?query=${encodeURIComponent(searchName)}&api_key=${APIKEY}`
       );
-
       setSearchedData(response.data.results);
 
     } catch (err) {
@@ -92,7 +92,6 @@ const SearchScreen: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
     </View>
-
   );
 };
 
@@ -174,5 +173,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 100,
+    color: "#273646",
   },
 });

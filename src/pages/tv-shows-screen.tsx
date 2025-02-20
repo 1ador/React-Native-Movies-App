@@ -8,15 +8,16 @@ import { ENV } from "@/config";
 
 const TVShowScreen: React.FC = () => {
   const APIKEY = ENV.API_KEY;
+  const URL = ENV.BASE_URL;
   const [category, setCategory] = useState<string>("popular");
   const [fetchUrl, setFetchUrl] = useState(
-    `https://api.themoviedb.org/3/tv/${category}?api_key=${APIKEY}`
+    `${URL}/tv/${category}?api_key=${APIKEY}`
   );
 
   useEffect(() => {
-    setFetchUrl(`https://api.themoviedb.org/3/tv/${category}?api_key=${APIKEY}`);
+    setFetchUrl(`${URL}/tv/${category}?api_key=${APIKEY}`);
   }, [category]);
-
+  
   const { fetchedData, loading, page, totalPages, handleNextPage, handlePreviousPage, getCurrentPageData } =
     usePagination({ fetchUrl });
 
